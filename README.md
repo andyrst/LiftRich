@@ -13,3 +13,7 @@ Author: Andrey Harchenko
 Contact: jocker3d@gmail.com
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
