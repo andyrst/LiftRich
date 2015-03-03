@@ -1,0 +1,6 @@
+// Source file: gira.max
+CIwMaterial
+{
+	name "gira/01_Default"
+	texture0 "./textures/texture01.png"
+}

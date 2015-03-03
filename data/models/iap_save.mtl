@@ -1,0 +1,8 @@
+// Source file: iap_save.max
+CIwMaterial
+{
+	name "iap_save/14_Default"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/dollar01.png"
+	texture1 "./textures/gold_reflect.png"
+}

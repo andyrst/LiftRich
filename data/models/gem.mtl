@@ -1,0 +1,10 @@
+// Source file: gem.max
+CIwMaterial
+{
+	name "gem/07_Default"
+	alphaMode "HALF"
+	depthWriteEnable false
+	shaderTechnique "fake_gold"
+	texture0 "./textures/gem.png"
+	texture1 "./textures/gold_reflect.png"
+}

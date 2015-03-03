@@ -1,0 +1,72 @@
+CIwGxShaderTechnique
+{
+	name "blurbuffer"
+
+	param "inBlurStep" vec2 1 { 1.0, 0 }
+		
+	shader "vertex"
+	{
+		// These attributes will attach to the regular iwgx streams
+		attribute highp vec4	inVert;	// Vertices	
+		attribute mediump vec2	inUV0; // UV Stream 0
+		
+		// These uniforms will be filled by the standard iwgx fixed function pipeline
+		uniform mediump mat4	inPMVMat; // transform from local coordinate space to window coordinates
+		uniform mediump vec2	inUVScale; // scale to apply to UVs (gx uses uv scaling for various purposes)
+		uniform mediump vec2	inBlurStep;
+		
+		// Output of vertex shader
+		varying mediump vec2	outUV0; // UV
+		varying mediump vec2	outUV1; // UV
+		varying mediump vec2	outUV2; // UV
+		varying mediump vec2	outUV3; // UV
+		varying mediump vec2	outUV4; // UV
+		varying mediump vec2	outUV5; // UV
+		varying mediump vec2	outUV6; // UV
+		
+		void main(void)
+		{
+			// Transform the vertex 
+			gl_Position = inPMVMat * inVert;
+
+			mediump vec2 uv = inUV0 * inUVScale;
+			// applying the uv scale
+			
+			outUV0 = uv - inBlurStep * 3.0;
+			outUV1 = uv - inBlurStep * 2.0;
+			outUV2 = uv - inBlurStep;
+			outUV3 = uv;
+			outUV4 = uv + inBlurStep;
+			outUV5 = uv + inBlurStep * 2.0;
+			outUV6 = uv + inBlurStep * 3.0;
+		}
+	}
+
+	shader "fragment"
+	{		
+		// These uniforms will be filled by the standard iwgx fixed function pipeline
+		uniform sampler2D		inSampler0; // texture stage 0
+
+		// Output of vertex shader
+		varying mediump vec2	outUV0; // UV
+		varying mediump vec2	outUV1; // UV
+		varying mediump vec2	outUV2; // UV
+		varying mediump vec2	outUV3; // UV
+		varying mediump vec2	outUV4; // UV
+ 		varying mediump vec2	outUV5; // UV
+		varying mediump vec2	outUV6; // UV
+
+		void main(void)
+		{
+			lowp vec4 col = texture2D( inSampler0, outUV0 ) * 0.05;
+			col += texture2D( inSampler0, outUV1 ) * 0.1;
+			col += texture2D( inSampler0, outUV2 ) * 0.25;
+			col += texture2D( inSampler0, outUV3 ) * 0.4;
+			col += texture2D( inSampler0, outUV4 ) * 0.25;
+			col += texture2D( inSampler0, outUV5 ) * 0.1;
+			col += texture2D( inSampler0, outUV6 ) * 0.05;
+			
+			gl_FragColor = col;
+		}
+	}
+}

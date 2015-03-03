@@ -1,0 +1,8 @@
+// Source file: goldphone.max
+CIwMaterial
+{
+	name "goldphone/08_Default"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/goldphone.png"
+	texture1 "./textures/glass_reflect.png"
+}

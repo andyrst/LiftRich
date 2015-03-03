@@ -1,0 +1,6 @@
+// Source file: dollar_pack03.max
+CIwMaterial
+{
+	name "dollar_pack03/01_Default"
+	texture0 "./textures/texture01.png"
+}

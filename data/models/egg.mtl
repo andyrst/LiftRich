@@ -1,0 +1,8 @@
+// Source file: egg.max
+CIwMaterial
+{
+	name "egg/09_Default"
+	shaderTechnique "normal_specular"
+	texture0 "./textures/egg.png"
+	texture1 "./textures/egg_normal.bmp"
+}

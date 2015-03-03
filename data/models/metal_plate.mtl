@@ -1,0 +1,6 @@
+// Source file: metal_plate.max
+CIwMaterial
+{
+	name "metal_plate/01_Default"
+	texture0 "./textures/texture01.png"
+}

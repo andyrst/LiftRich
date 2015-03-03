@@ -1,0 +1,8 @@
+// Source file: iap_doublecoins.max
+CIwMaterial
+{
+	name "iap_doublecoins/14_Default"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/coin_pack.png"
+	texture1 "./textures/gold_reflect.png"
+}

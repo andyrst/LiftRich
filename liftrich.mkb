@@ -1,0 +1,128 @@
+#!/usr/bin/env mkb
+
+
+options
+{
+    module_path="src/modules"
+
+}
+
+
+subprojects
+{
+    iwgx
+    iwgraphics
+	iwgxfont
+    SoundEngine
+#	iwbilling
+	s3eDialog
+#   s3eWebView
+    s3eFacebook
+    s3eIOSGameCenter
+#	s3eFlurry
+#	s3eFlurryAppSpot
+	CGAdMob
+	s3eIOSAppStoreBilling
+}
+
+files
+{
+    [source]
+    (src)
+	Audio.cpp
+	CInput.cpp
+    main.cpp	
+	social.cpp
+	score.cpp
+#	flurryappspot.cpp
+	Level.cpp
+	CParticleSystem.cpp
+
+	Audio.h
+	CInput.h
+	Vectors.h
+	social.h
+	score.h
+#	flurryappspot.h
+	Level.h
+	CParticleSystem.h
+
+
+	["interface"]
+	(interface)
+	slidebro.defines.txt
+
+	
+    [Shaders]
+    (data/shaders)
+	normal_specular.itx
+	fake_gold.itx
+	bloombuffer.itx
+    blurbuffer.itx
+    postprocess.itx
+    
+
+}
+
+assets
+{
+    (data)
+    models
+	ui
+	sounds
+	shaders
+	levels
+
+    
+    (data-ram/data-gles1, data)
+	common.group.bin
+	shaders.group.bin
+	models.group.bin
+
+
+}
+
+
+
+
+deployments
+{
+    version = "1.3.0"
+	
+
+}
+
+
+deployments
+{
+	iphone-enable-4inch-retina="1"
+	
+    # the App/Bundle ID (IOS only!)
+    iphone-appid="com.liftrich.game"
+
+	# FACEBOOK_APP_ID for login function correctly (see in facebook dev account)
+ 	iphone-bundle-url-name="com.liftrich.game"
+    iphone-bundle-url-schemes="fb1516504378596644"
+}
+
+deployments
+{
+	# the Andorid manifest file (Android only!)
+    # ["Default"]
+    # android-manifest='AndroidManifest.xml'
+	# android-extra-strings='(app_id,fb1463056143945738)'
+}
+
+#### AUTO GENERATED deployment settings from DeployTool.exe. Do not edit below this line ####
+deployments
+{
+	["Default"]
+	caption='Lift Rich'
+	icon='icon/'
+	iphone-show-status-bar='1'
+	name='Lift Rich'
+#	iphone-provisioning-profile='liftrich_distribution_appstore.mobileprovision'
+#	iphone-sign-for-distribution=1
+}
+
+define BUILD_FOR_IOS

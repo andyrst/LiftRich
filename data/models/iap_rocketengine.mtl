@@ -1,0 +1,8 @@
+// Source file: iap_rocketengine.max
+CIwMaterial
+{
+	name "iap_rocketengine/01_Default"
+	shaderTechnique "normal_specular"
+	texture0 "./textures/iap_texture.png"
+	texture1 "./textures/iap_texture_normal.bmp"
+}

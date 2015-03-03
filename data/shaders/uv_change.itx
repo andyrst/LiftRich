@@ -1,0 +1,43 @@
+CIwGxShaderTechnique
+{
+	name "uv_change"
+
+	param "myparam" float 1 0.0
+
+	shader "vertex"
+	{
+		attribute highp vec4	inVert;
+		attribute mediump vec2	inUV0;
+		uniform highp mat4		inPMVMat;
+		uniform mediump vec2	inUVScale;
+		varying mediump vec2	outUV0; 
+		
+		void main(void)
+		{
+			gl_Position = inPMVMat * inVert;
+			
+			outUV0 = inUV0 * inUVScale;
+		}
+	}
+
+	shader "fragment"
+	{
+		varying mediump vec2	outUV0;
+		uniform sampler2D		inSampler0;
+		uniform mediump float	myparam;
+
+
+		void main(void)
+		{
+
+
+			mediump vec2 myuv;
+			myuv.x = outUV0.x + myparam;
+			myuv.y = outUV0.y;
+		
+			gl_FragColor = texture2D( inSampler0, myuv );
+
+			
+		}
+	}
+}

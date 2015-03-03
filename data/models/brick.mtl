@@ -1,0 +1,6 @@
+// Source file: brick.max
+CIwMaterial
+{
+	name "brick/01_Default"
+	texture0 "./textures/texture01.png"
+}

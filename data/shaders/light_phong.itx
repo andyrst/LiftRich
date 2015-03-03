@@ -1,0 +1,150 @@
+CIwGxShaderTechnique
+{
+	name "light_phong"
+	
+	shader "vertex"
+	{
+		// These attributes will attach to the regular iwgx streams
+		attribute highp vec4	inVert;	// Vertices	
+		attribute mediump vec4	inCol; // Colours
+		attribute mediump vec3	inNorm; // Normals
+		attribute mediump vec3	inTangent; // Tangents
+		attribute mediump vec3	inBiTangent; // BiTangents
+		attribute mediump vec2	inUV0; // UV Stream 0
+		attribute mediump vec2	inUV1; // UV Stream 0
+
+		
+		// These uniforms will be filled by the standard iwgx fixed function pipeline
+		uniform mediump vec3	inEyePos; // Position of camera (in same space as verts)
+		uniform mediump mat4	inPMVMat; // transform from local coordinate space to window coordinates
+		uniform mediump mat3	inModelRotMat;
+		uniform mediump vec2	inUVScale; // scale to apply to UVs (gx uses uv scaling for various purposes)
+		uniform mediump vec3	inDiffuseDir; // direction of diffuse lighting
+		uniform mediump vec3 	inCamPos;
+		uniform mediump vec3 	inModelPos;
+		
+		// Output of vertex shader
+		varying mediump vec3	outNorm; // Vertex normal
+		varying mediump vec2	outUV0; // UV
+		varying lowp vec3	outViewPos; // Direction of eyePos (in tangent space)
+		varying lowp vec3	outLightDir; // Direction of diffuse light source (in tangent space)
+		varying lowp float	outFogFactor;
+		uniform mediump float inFogNear; // Fog near plane
+		uniform mediump float inFogRange; // Fog depth
+		
+		// Pre-divide Z position for fog
+		varying mediump float	outZPos;
+		varying mediump vec2 Texcoord2;
+		
+
+	varying vec3 NormDir;
+	varying vec3 ViewDir;
+	varying vec3 LightDir;
+
+
+		void main(void)
+		{
+			// transform the vertex 
+			gl_Position = inPMVMat * inVert;
+
+    		// calculate fog contribution 
+			outFogFactor = clamp((gl_Position.z - inFogNear) / inFogRange, 0.0, 1.0);
+		
+			// generate tangent space transform
+			mediump mat3 tangentMat = mat3(inTangent, inNorm, inBiTangent);
+			
+			// calculate direction to vertex (in tangent space)
+			outViewPos = normalize(inVert.xyz - inEyePos);
+		
+			// applying the uv scale
+			outUV0 = inUV0 * inUVScale;
+			
+			// calculate direction to diffuse light source (in tangent space)
+			outLightDir = normalize(inDiffuseDir * inModelRotMat);
+
+			outNorm = normalize (inNorm * inModelRotMat);
+
+			float uvoffset = 0.002 * (inModelPos.y + inVert.x);
+
+		   	Texcoord2 = vec2(inUV1.x + uvoffset, inUV1.y + uvoffset);
+
+
+			NormDir = outNorm;
+			ViewDir = outViewPos;
+			LightDir = outLightDir;
+
+		}
+	}
+
+	shader "fragment"
+	{		
+		// These uniforms are filled by the params exposed above
+		uniform mediump float	inTVScale; // Size of I3D Television
+
+		// These uniforms will be filled by the standard iwgx fixed function pipeline
+		uniform lowp vec4	inDiffuse; // diffuse material colour
+		uniform lowp vec4	inAmbient; // ambient material colour
+		uniform mediump vec4 inMaterialSpecular;
+		uniform lowp vec4 inMaterialAmbient; 
+		uniform lowp vec4 inMaterialDiffuse;
+ 
+		uniform sampler2D		inSampler0; // texture stage 0
+		uniform sampler2D		inSampler1; // texture stage 1
+		uniform lowp vec4  inFogColour; // Fog colour
+
+
+		// Output of vertex shader
+		varying mediump vec2	outUV0;
+		varying lowp vec3	outViewPos;
+		varying lowp vec3	outLightDir;
+		varying mediump vec3	outModelPos;
+		varying lowp float	outFogFactor;
+		varying mediump vec3	outNorm; // Vertex normal
+		varying mediump vec2 	Texcoord2;
+
+
+
+
+	precision mediump float;
+
+
+	// input variables from vertex shader (in view coordinates)
+	varying vec3 NormDir;
+	varying vec3 ViewDir;
+	varying vec3 LightDir;
+
+	void main (void)
+	{
+	    vec3 L = normalize(LightDir);
+	    vec3 N = normalize(NormDir);
+	    vec3 E = normalize(ViewDir);
+
+	lowp vec3 ambientLight = vec3(inAmbient);
+	lowp vec3 light0Color = vec3(inDiffuse);
+	lowp vec3 materialAmbient = vec3(inMaterialAmbient);
+	lowp vec3 materialDiffuse = vec3(inMaterialDiffuse);
+	lowp vec3 materialSpecular = vec3(inMaterialSpecular);
+	mediump float materialShininess = 10.3;
+
+	materialDiffuse = vec3(texture2D( inSampler0, outUV0 ));
+
+
+	    lowp vec3 ambient = ambientLight * materialAmbient;
+
+	    float cos_theta = dot(L, N);
+
+  	  lowp vec3 diffuse = materialDiffuse * light0Color * max(0.0, cos_theta);
+
+	    lowp vec3 specular = vec3(0.0, 0.0, 0.0);
+//  if (cos_theta > 0.0) {
+        lowp vec3 R = reflect(-L, N);
+        lowp vec3 V = normalize(-E);
+        float cos_alpha = dot(R, V);
+        specular =  step(0.0, cos_theta) *  materialSpecular * light0Color * pow(max(0.0, cos_alpha), materialShininess);
+        //          ~~~~~~~~~~~~~~~~~~~~~~
+        //          should produce the same results as the commented branch, right?
+ // }
+	    gl_FragColor = vec4(ambient + diffuse + specular, 1.0);
+	}
+	}
+}

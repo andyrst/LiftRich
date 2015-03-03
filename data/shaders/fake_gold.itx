@@ -1,0 +1,117 @@
+CIwGxShaderTechnique
+{
+	name "fake_gold"
+	
+	shader "vertex"
+	{
+		/// Attributes
+		attribute highp vec4	inVert;	
+		attribute mediump vec3	inNorm;
+		attribute mediump vec2	inUV0;
+		attribute mediump vec2	inUV1;
+
+		
+		/// Uniforms
+		uniform mediump vec3	inEyePos;
+		uniform mediump mat4	inPMVMat;
+		uniform mediump mat3	inModelRotMat;
+		uniform mediump vec2	inUVScale;
+		uniform mediump vec3	inDiffuseDir;
+		uniform mediump vec3 	inModelPos;
+		uniform mediump float inFogNear;
+		uniform mediump float inFogRange;
+		uniform mediump vec3 	inCamPos; 
+		
+		// Outputs
+		varying mediump vec3	outNorm;
+		varying mediump vec2	outUV0;
+		varying lowp vec3	outViewPos;
+		varying lowp vec3	outLightDir;
+		varying lowp float	outFogFactor;
+
+		
+		
+		varying mediump float	outZPos;
+		varying mediump vec2 Texcoord2;
+		
+
+
+		void main(void)
+		{
+
+			gl_Position = inPMVMat * inVert;
+
+			outFogFactor = clamp((gl_Position.z - inFogNear) / inFogRange, 0.0, 1.0);
+			
+			outViewPos = normalize(inVert.xyz   - inEyePos);
+		
+			outUV0 = inUV0 * inUVScale;
+			
+			outLightDir = normalize(inDiffuseDir);
+
+			outNorm = normalize (inNorm);
+		
+			highp vec3 veconrm = vec3(inNorm * inModelRotMat);
+			highp vec3 vecocam = vec3(inEyePos  - inCamPos);
+
+
+		
+			mediump vec3 product = 0.0009 * vec3(vecocam - veconrm);
+
+			// calculate uv offsets for fake gold reflection
+	//		float uvoffset1 = (inModelPos.y + inVert.x);
+	//		float uvoffset2 = (inModelPos.x + inVert.x);
+
+		
+	
+		   	Texcoord2 = vec2(inUV1.x + product.x, inUV1.y + product.y);
+		}
+	}
+
+	shader "fragment"
+	{		
+
+		uniform lowp vec4	inDiffuse;
+		uniform lowp vec4	inAmbient;
+		uniform sampler2D		inSampler0;
+		uniform sampler2D		inSampler1;
+		uniform lowp vec4  inFogColour;
+
+
+		// Output of vertex shader
+		varying mediump vec2	outUV0;
+		varying lowp vec3	outViewPos;
+		varying lowp vec3	outLightDir;
+		varying mediump vec3	outModelPos;
+		varying lowp float	outFogFactor;
+		varying mediump vec3	outNorm;
+		varying mediump vec2 	Texcoord2;
+
+
+
+
+		void main(void)
+		{
+
+			lowp vec4 diffuseTex = texture2D( inSampler0, outUV0 );
+
+			/// get alpha channel in diffuse texture
+			lowp float alpha = diffuseTex.w;
+
+			mediump vec4 BaseColor2 = texture2D(inSampler1, Texcoord2);
+			
+			diffuseTex = diffuseTex +  0.7 * BaseColor2;
+
+			lowp vec3 reflViewDir = reflect(outViewPos, outNorm);
+			
+			lowp vec3 spec = pow(clamp(dot(reflViewDir, outLightDir), 0.0, 1.0),24.0) * vec3(1.5);
+			
+			lowp float diffuseLight = max(0.0, dot(outLightDir, outNorm));
+			lowp vec3 diffuse = inAmbient.xyz + inDiffuse.xyz * diffuseLight;
+
+			lowp vec3 prefog = diffuseTex.xyz * diffuse + spec;
+
+			gl_FragColor = vec4(mix(prefog, inFogColour.xyz, outFogFactor), alpha);
+ 		}
+	}
+}

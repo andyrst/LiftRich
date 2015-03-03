@@ -1,0 +1,6 @@
+// Source file: baseball_glove.max
+CIwMaterial
+{
+	name "baseball_glove/01_Default"
+	texture0 "./textures/texture01.png"
+}

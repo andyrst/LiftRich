@@ -1,0 +1,8 @@
+// Source file: dollar.max
+CIwMaterial
+{
+	name "dollar/13_Default"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/dollar01.png"
+	texture1 "./textures/gold_reflect.png"
+}

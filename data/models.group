@@ -1,0 +1,63 @@
+CIwResGroup
+{
+	name "Models"
+	
+	"./models/money_bag.geo"
+
+	"./models/coin_pack01.geo"
+	
+	"./models/coin_pack02.geo"
+
+	"./models/coin_pack03.geo"
+
+	"./models/dollar_pack01.geo"
+
+	"./models/dollar_pack02.geo"
+
+	"./models/dollar_pack03.geo"
+
+	"./models/dollar_pack04.geo"
+
+	"./models/antique_box.geo"
+
+	"./models/gira.geo"
+
+	"./models/brick.geo"
+
+	"./models/gold_block.geo"
+
+	"./models/egg.geo"
+
+	"./models/goldphone.geo"
+
+	"./models/baseball_glove.geo"
+
+	"./models/tvset.geo"
+
+	"./models/metal_plate.geo"
+
+	"./models/gem.geo"
+
+	"./models/game_name.geo"
+
+	
+	"./models/main_plate.geo"
+
+	"./models/gold_coin.geo"
+
+	"./models/dollar.geo"
+
+	"./models/menu_wheel2.geo"
+
+	"./models/iap_rocketengine.geo"
+	
+	"./models/iap_liftjack.geo"
+
+	"./models/iap_doublecoins.geo"
+
+	"./models/iap_save.geo"
+
+
+
+
+}

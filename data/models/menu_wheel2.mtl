@@ -1,0 +1,8 @@
+// Source file: _menu_wheel2.max
+CIwMaterial
+{
+	name "menu_wheel2/01_Default"
+	alphaMode "BLEND"
+	shaderTechnique "uv_change"
+	texture0 "./textures/menu_tex.png"
+}

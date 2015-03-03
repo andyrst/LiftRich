@@ -1,0 +1,6 @@
+// Source file: tvset.max
+CIwMaterial
+{
+	name "tvset/01_Default"
+	texture0 "./textures/texture01.png"
+}

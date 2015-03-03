@@ -1,0 +1,12 @@
+CIwResGroup
+{
+	name "Shaders"
+	shared true
+	"./shaders/light_phong.itx"
+	"./shaders/fake_gold.itx"
+	"./shaders/normal_specular.itx"
+	"./shaders/bloombuffer.itx"
+	"./shaders/blurbuffer.itx"
+	"./shaders/postprocess.itx"
+	"./shaders/uv_change.itx"
+}

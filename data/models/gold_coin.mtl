@@ -1,0 +1,8 @@
+// Source file: gold_coin.max
+CIwMaterial
+{
+	name "gold_coin/01_Default"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/gold_coin.png"
+	texture1 "./textures/gold_reflect.png"
+}

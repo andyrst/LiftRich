@@ -1,0 +1,8 @@
+// Source file: game_name3.max
+CIwMaterial
+{
+	name "game_name/01_Default"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/dollar01.png"
+	texture1 "./textures/glass_reflect.png"
+}

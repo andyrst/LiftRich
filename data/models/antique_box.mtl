@@ -1,0 +1,6 @@
+// Source file: antique_box.max
+CIwMaterial
+{
+	name "antique_box/01_Default"
+	texture0 "./textures/texture01.png"
+}

@@ -1,0 +1,6 @@
+// Source file: money_bag.max
+CIwMaterial
+{
+	name "money_bag/01_Default"
+	texture0 "./textures/texture01.png"
+}

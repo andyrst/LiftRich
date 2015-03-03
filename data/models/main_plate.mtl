@@ -1,0 +1,9 @@
+// Source file: main_plate_new.max
+CIwMaterial
+{
+	name "main_plate/04_Default"
+	alphaMode "BLEND"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/main_plate02.png"
+	texture1 "./textures/gold_reflect.png"
+}

@@ -1,0 +1,7 @@
+CIwResGroup
+{
+	name "Common"
+	"shaders.group"
+	"models.group"
+
+}

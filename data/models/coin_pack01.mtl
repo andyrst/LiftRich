@@ -1,0 +1,8 @@
+// Source file: coin_pack01.max
+CIwMaterial
+{
+	name "coin_pack01/14_Default"
+	shaderTechnique "normal_specular"
+	texture0 "./textures/coin_pack.png"
+	texture1 "./textures/coin_pack_normal.bmp"
+}

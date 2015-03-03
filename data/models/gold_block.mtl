@@ -1,0 +1,8 @@
+// Source file: gold_block.max
+CIwMaterial
+{
+	name "gold_block/01_Default"
+	shaderTechnique "fake_gold"
+	texture0 "./textures/gold_block.png"
+	texture1 "./textures/gold_reflect.png"
+}
