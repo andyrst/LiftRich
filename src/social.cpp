@@ -13,8 +13,8 @@
 #include "s3eDialog.h"
 //#include "s3eFlurry.h"
 
-const char* FACEBOOK_APP_ID_IOS = "1516504378596644";
-const char* FACEBOOK_APP_SECRET_IOS = "980a3d4cd0a3c02513e1f199751a4017";
+const char* FACEBOOK_APP_ID_IOS = "15165043xxxxxx";
+const char* FACEBOOK_APP_SECRET_IOS = "980xxxxxxxxxxxxxxxxxx";
 
 bool g_NativeFBEnable = false;
 s3eFBSession* g_CurrentFBSession = 0;
